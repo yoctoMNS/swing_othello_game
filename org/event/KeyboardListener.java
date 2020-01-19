@@ -9,25 +9,24 @@ import org.stage.Stage;
 
 public class KeyboardListener implements KeyListener {
     private GameManager game;
-    private Stage stage;
-    private Cursor cursor;
 
     public KeyboardListener( GameManager game ) {
         this.game = game;
-        this.stage = game.getStage();
-        this.cursor = game.getCursor();
     }
 
     @Override
     public void keyPressed( KeyEvent e ) {
-        cursor.update( e );
-        stage.update( e,
-                      cursor.getX() / Stage.TEXTURE_WIDTH,
-                      cursor.getY() / Stage.TEXTURE_HEIGHT,
-                      game.getTurn() );
-        if ( e.getKeyCode() == KeyEvent.VK_P ) {
+        switch ( e.getKeyCode() ) {
+        case KeyEvent.VK_P:
             game.turnChange();
+            break;
+
+        case KeyEvent.VK_M:
+            game.changeCurrentState();
+            break;
         }
+
+        game.getState().update( e );
     }
 
     @Override
